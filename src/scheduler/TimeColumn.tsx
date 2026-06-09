@@ -10,10 +10,9 @@ export interface TimeColumnProps {
   day: Date;
   startHour: number;
   endHour: number;
-  onCreate: any;
-  onMove: (id: string, deltaMinutes: number) => void;
-  onResize: (id: string, deltaMinutes: number) => void;
-  onEdit: (id: string) => void;
+  onCreate: (e: EventItem) => void;
+  onUpdate: (e: EventItem) => void;
+  onDelete: (e: EventItem) => void;
   height: number;
   di?: number;
 }
@@ -24,9 +23,8 @@ export const TimeColumn: React.FC<TimeColumnProps> = ({
   startHour,
   endHour,
   onCreate,
-  onMove,
-  onResize,
-  onEdit,
+  onUpdate,
+  onDelete,
   height,
   di,
 }: TimeColumnProps) => {
@@ -34,10 +32,7 @@ export const TimeColumn: React.FC<TimeColumnProps> = ({
   const pixelsPerMinute = height / totalMinutes;
   const yToMinutes = (y: number) => {
     const mins = Math.round(y / pixelsPerMinute);
-    const snapped = Math.max(
-      0,
-      Math.min(totalMinutes, Math.round(mins / 15) * 15),
-    );
+    const snapped = Math.max(0, Math.min(totalMinutes, Math.round(mins / 15) * 15));
     return startHour * 60 + snapped;
   };
   const handleCreate = (day: Date, ev: React.PointerEvent, onCreate: any) => {
@@ -53,8 +48,8 @@ export const TimeColumn: React.FC<TimeColumnProps> = ({
     const sched_ev = {
       id: mkId(),
       title: "New event",
-      start: formatISO(start),
-      end: formatISO(e),
+      start: start,
+      end: e,
       color: undefined,
     };
     onCreate(sched_ev);
@@ -77,9 +72,16 @@ export const TimeColumn: React.FC<TimeColumnProps> = ({
           <EventBlock
             key={p.id}
             pos={p}
-            onMove={(delta) => onMove(p.id, delta / pixelsPerMinute)}
-            onResize={(delta) => onResize(p.id, delta / pixelsPerMinute)}
-            onEdit={() => onEdit(p.id)}
+            onMove={(delta) => {
+              p.start = addMinutes(p.start, delta / pixelsPerMinute);
+              p.end = addMinutes(p.end, delta / pixelsPerMinute);
+              onUpdate(p);
+            }}
+            onResize={(delta) => {
+              p.end = addMinutes(p.end, delta / pixelsPerMinute);
+              onUpdate(p);
+            }}
+            onEdit={() => null}
           />
         ))}
       </div>

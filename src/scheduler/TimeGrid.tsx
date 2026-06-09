@@ -9,9 +9,8 @@ import { TimeColumn } from "./TimeColumn";
 type Props = {
   events: EventItem[];
   onCreate: (e: EventItem) => void;
-  onMove: (id: string, deltaMinutes: number) => void;
-  onResize: (id: string, deltaMinutes: number) => void;
-  onEdit: (id: string) => void;
+  onUpdate: (e: EventItem) => void;
+  onDelete: (e: EventItem) => void;
   startHour?: number;
   endHour?: number;
 };
@@ -19,9 +18,8 @@ type Props = {
 export default function TimeGrid({
   events,
   onCreate,
-  onMove,
-  onResize,
-  onEdit,
+  onUpdate,
+  onDelete,
   startHour = 6,
   endHour = 22,
 }: Props) {
@@ -44,13 +42,13 @@ export default function TimeGrid({
   });
 
   const eventsByDay = days.map((d) => {
-    const s = new Date(d);
-    s.setHours(0, 0, 0, 0);
-    const e = new Date(d);
-    e.setHours(23, 59, 59, 999);
+    const col_start = new Date(d);
+    col_start.setHours(0, 0, 0, 0);
+    const col_end = new Date(d);
+    col_end.setHours(23, 59, 59, 999);
     return events.filter((ev) => {
-      const st = parseISO(ev.start);
-      return st >= s && st <= e;
+      const st = ev.start;
+      return st >= col_start && st <= col_end;
     });
   });
 
@@ -73,9 +71,8 @@ export default function TimeGrid({
             startHour={startHour}
             endHour={endHour}
             onCreate={onCreate}
-            onResize={onResize}
-            onEdit={onEdit}
-            onMove={onMove}
+            onUpdate={onUpdate}
+            onDelete={onDelete}
             height={height}
           ></TimeColumn>
         ))}

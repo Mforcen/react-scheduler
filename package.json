@@ -14,9 +14,11 @@
     "react-dom": "^19"
   },
   "devDependencies": {
-    "@types/bun": "latest",
+    "@tsdown/css": "^0.22.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "typescript": "^6.0.3",
+    "unplugin-dts": "^1.0.2",
     "vite-plus": "latest"
   },
   "packageManager": "pnpm@11.5.2",

@@ -1,7 +1,7 @@
 export type EventItem = {
   id: string;
   title: string;
-  start: string; // ISO
-  end: string; // ISO
+  start: Date;
+  end: Date;
   color?: string;
 };

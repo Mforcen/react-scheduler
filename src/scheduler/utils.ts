@@ -28,8 +28,8 @@ export function layoutEvents(
 
   const mapped = items.map((it) => ({
     ...it,
-    _start_ts: parseISO(it.start).getTime(),
-    _end_ts: parseISO(it.end).getTime(),
+    _start_ts: it.start.getTime(),
+    _end_ts: it.end.getTime(),
   })) as EventTs[];
   mapped.sort((a, b) => a._start_ts - b._start_ts);
 
@@ -37,9 +37,7 @@ export function layoutEvents(
   for (const ev of mapped) {
     let placed = false;
     for (const group of groups) {
-      const overlap = group.some(
-        (x) => x._start_ts < ev._end_ts && x._end_ts > ev._start_ts,
-      );
+      const overlap = group.some((x) => x._start_ts < ev._end_ts && x._end_ts > ev._start_ts);
       if (overlap) {
         group.push(ev);
         placed = true;
