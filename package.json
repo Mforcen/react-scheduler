@@ -2,6 +2,9 @@
   "name": "react-scheduler",
   "version": "0.1.0",
   "private": true,
+  "files": [
+    "dist/*.css"
+  ],
   "type": "module",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
