@@ -21,4 +21,4 @@ declare const Scheduler: ({
   delete_cb,
 }: SchedulerProps) => import("react").JSX.Element;
 //#endregion
-export { Scheduler as default };
+export { type EventItem, Scheduler };

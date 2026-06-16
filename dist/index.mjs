@@ -320,7 +320,4 @@ const Scheduler = ({ events, create_cb, update_cb, delete_cb }) => {
   });
 };
 //#endregion
-//#region src/index.ts
-var src_default = Scheduler;
-//#endregion
-export { src_default as default };
+export { Scheduler };

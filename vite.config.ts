@@ -1,6 +1,5 @@
 import { resolve } from "path";
 import { defineConfig } from "vite-plus";
-import dts from "unplugin-dts/vite";
 
 export default defineConfig({
   staged: {
@@ -15,5 +14,4 @@ export default defineConfig({
       fileName: "react-scheduler",
     },
   },
-  plugins: [dts()],
 });
