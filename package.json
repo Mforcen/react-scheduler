@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "files": [
-    "dist/*.css"
+    "dist/style.css",
+    "dist/index.mjs",
+    "dist/index.d.mts"
   ],
   "type": "module",
   "module": "./dist/index.mjs",
