@@ -1,29 +1,12 @@
-:root {
-  --bg: #fff;
-  --muted: #f5f7fb;
-  --text: #0f172a;
-}
-body {
-  font-family: Inter, system-ui, Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  margin: 0;
-  padding: 0;
-}
-h2 {
-  margin: 8px 0 16px 0;
-  font-weight: 600;
-}
-
-.grid {
+.scheduler-tv-grid {
   display: flex;
   align-items: flex-start;
   gap: 8px;
 }
-.time-col {
+.scheduler-tv-time-col {
   width: 60px;
 }
-.time-row {
+.scheduler-tv-time-row {
   height: 64px;
   border-top: 1px solid #eee;
   padding: 4px;
@@ -36,7 +19,7 @@ h2 {
   padding-right: 6px;
 }
 
-.day {
+.scheduler-tv-day {
   flex: 1;
   border-left: 1px solid #eee;
   position: relative;
@@ -45,7 +28,7 @@ h2 {
   display: flex;
   flex-direction: column;
 }
-.day-header {
+.scheduler-tv-day-header {
   height: 28px;
   padding: 4px 6px;
   border-bottom: 1px solid #f0f0f0;
@@ -53,13 +36,13 @@ h2 {
   background: #3a3a3a;
   color: #ffffff;
 }
-.day-body {
+.scheduler-tv-day-body {
   position: relative;
   flex-grow: 1;
 }
 
 /* Event block */
-.event {
+.scheduler-tv-event {
   position: absolute;
   padding: 6px;
   box-sizing: border-box;
@@ -71,14 +54,14 @@ h2 {
   user-select: none;
   touch-action: none;
 }
-.event-title {
+.scheduler-tv-event-title {
   font-size: 12px;
   font-weight: 600;
   color: #07203a;
 }
 
 /* Resize handle at bottom of event */
-.resize-handle {
+.scheduler-tv-resize-handle {
   position: absolute;
   left: 0;
   right: 0;
@@ -91,18 +74,18 @@ h2 {
 }
 
 /* Small visual tweak for narrow columns */
-.day .event {
+.scheduler-tv-day .scheduler-tv-event {
   margin: 3px;
 }
 
 /* Focus/keyboard styles */
-.event:focus {
+.scheduler-tv-event:focus {
   outline: 2px solid rgba(59, 130, 246, 0.6);
   z-index: 10;
 }
 
 /* Make the time column lines subtle */
-.day-body::before {
+.scheduler-tv-day-body::before {
   content: "";
   position: absolute;
   left: 0;
@@ -120,13 +103,13 @@ h2 {
 
 /* Responsive tweaks */
 @media (max-width: 800px) {
-  .time-col {
+  .scheduler-tv-time-col {
     display: none;
   }
-  .day-header {
+  .scheduler-tv-day-header {
     font-size: 12px;
   }
-  .grid {
+  .scheduler-tv-grid {
     gap: 6px;
   }
 }

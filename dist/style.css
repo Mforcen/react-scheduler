@@ -1,33 +1,14 @@
-:root {
-  --bg: #fff;
-  --muted: #f5f7fb;
-  --text: #0f172a;
-}
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  margin: 0;
-  padding: 0;
-  font-family: Inter, system-ui, Arial, sans-serif;
-}
-
-h2 {
-  margin: 8px 0 16px;
-  font-weight: 600;
-}
-
-.grid {
+.scheduler-tv-grid {
   align-items: flex-start;
   gap: 8px;
   display: flex;
 }
 
-.time-col {
+.scheduler-tv-time-col {
   width: 60px;
 }
 
-.time-row {
+.scheduler-tv-time-row {
   color: #666;
   box-sizing: border-box;
   border-top: 1px solid #eee;
@@ -39,7 +20,7 @@ h2 {
   display: flex;
 }
 
-.day {
+.scheduler-tv-day {
   background: linear-gradient(#0000 0% 80%);
   border-left: 1px solid #eee;
   flex-direction: column;
@@ -49,7 +30,7 @@ h2 {
   position: relative;
 }
 
-.day-header {
+.scheduler-tv-day-header {
   color: #fff;
   background: #3a3a3a;
   border-bottom: 1px solid #f0f0f0;
@@ -58,12 +39,12 @@ h2 {
   font-size: 13px;
 }
 
-.day-body {
+.scheduler-tv-day-body {
   flex-grow: 1;
   position: relative;
 }
 
-.event {
+.scheduler-tv-event {
   box-sizing: border-box;
   color: #082032;
   cursor: grab;
@@ -76,13 +57,13 @@ h2 {
   box-shadow: 0 2px 6px #0000001f;
 }
 
-.event-title {
+.scheduler-tv-event-title {
   color: #07203a;
   font-size: 12px;
   font-weight: 600;
 }
 
-.resize-handle {
+.scheduler-tv-resize-handle {
   cursor: ns-resize;
   background: linear-gradient(90deg, #fff3, #0000000d);
   border-bottom-right-radius: 6px;
@@ -94,16 +75,16 @@ h2 {
   right: 0;
 }
 
-.day .event {
+.scheduler-tv-day .scheduler-tv-event {
   margin: 3px;
 }
 
-.event:focus {
+.scheduler-tv-event:focus {
   z-index: 10;
   outline: 2px solid #3b82f699;
 }
 
-.day-body:before {
+.scheduler-tv-day-body:before {
   content: "";
   pointer-events: none;
   background-image: linear-gradient(#0000 0% 24px, #00000005 24px);
@@ -112,15 +93,15 @@ h2 {
 }
 
 @media (width <= 800px) {
-  .time-col {
+  .scheduler-tv-time-col {
     display: none;
   }
 
-  .day-header {
+  .scheduler-tv-day-header {
     font-size: 12px;
   }
 
-  .grid {
+  .scheduler-tv-grid {
     gap: 6px;
   }
 }

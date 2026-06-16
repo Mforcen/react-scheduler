@@ -3,7 +3,7 @@ import { layoutEvents, mkId, snapTo, type Positioned } from "./utils";
 import type { EventItem } from "./types";
 import { addMinutes, format } from "date-fns";
 import { useEffect, useState } from "react";
-import { formatISO } from "date-fns";
+import "./timeview.css";
 
 export interface TimeColumnProps {
   events: EventItem[];
@@ -57,17 +57,17 @@ export const TimeColumn: React.FC<TimeColumnProps> = ({
   const positioned = layoutEvents(events, startHour, endHour, height);
   return (
     <div
-      className="day"
+      className="scheduler-tv-day"
       key={di}
       onPointerDown={(ev) => {
         if ((ev.target as HTMLElement).closest(".event")) return;
         handleCreate(day, ev, onCreate);
       }}
     >
-      <div key={di} className="day-header">
+      <div key={di} className="scheduler-tv-day-header">
         {format(day, "EEE dd")}
       </div>
-      <div className="day-body">
+      <div className="scheduler-tv-day-body">
         {positioned.map((p) => (
           <EventBlock
             key={p.id}
@@ -149,7 +149,7 @@ const EventBlock = ({ pos, onMove, onResize, onEdit }: EventBlockProps) => {
 
   return (
     <div
-      className="event"
+      className="scheduler-tv-event"
       style={{
         top: topPx,
         height: Math.max(20, heightPx),
@@ -170,8 +170,8 @@ const EventBlock = ({ pos, onMove, onResize, onEdit }: EventBlockProps) => {
         if (e.key === "PageDown") onResize(-15);
       }}
     >
-      <div className="event-title">{pos.title}</div>
-      <div className="resize-handle" onPointerDown={onResizePointerDown} />
+      <div className="scheduler-tv-event-title">{pos.title}</div>
+      <div className="scheduler-tv-resize-handle" onPointerDown={onResizePointerDown} />
     </div>
   );
 };

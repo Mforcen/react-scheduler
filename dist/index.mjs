@@ -5,13 +5,13 @@ import { jsx, jsxs } from "react/jsx-runtime";
 const TimeIndex = ({ endHour, startHour }) => {
   return /* @__PURE__ */ jsx("div", {
     style: { marginTop: "34px" },
-    className: "time-col",
+    className: "scheduler-tv-time-col",
     children: Array.from({ length: endHour - startHour }).map((_, i) => {
       const h = startHour + i;
       return /* @__PURE__ */ jsx(
         "div",
         {
-          className: "time-row",
+          className: "scheduler-tv-time-row",
           children: format(/* @__PURE__ */ new Date().setHours(h, 0, 0, 0), "HH:00"),
         },
         i,
@@ -126,7 +126,7 @@ const TimeColumn = ({
   return /* @__PURE__ */ jsxs(
     "div",
     {
-      className: "day",
+      className: "scheduler-tv-day",
       onPointerDown: (ev) => {
         if (ev.target.closest(".event")) return;
         handleCreate(day, ev, onCreate);
@@ -135,13 +135,13 @@ const TimeColumn = ({
         /* @__PURE__ */ jsx(
           "div",
           {
-            className: "day-header",
+            className: "scheduler-tv-day-header",
             children: format(day, "EEE dd"),
           },
           di,
         ),
         /* @__PURE__ */ jsx("div", {
-          className: "day-body",
+          className: "scheduler-tv-day-body",
           children: positioned.map((p) =>
             /* @__PURE__ */ jsx(
               EventBlock,
@@ -209,7 +209,7 @@ const EventBlock = ({ pos, onMove, onResize, onEdit }) => {
     window.addEventListener("pointerup", up);
   };
   return /* @__PURE__ */ jsxs("div", {
-    className: "event",
+    className: "scheduler-tv-event",
     style: {
       top: topPx,
       height: Math.max(20, heightPx),
@@ -231,11 +231,11 @@ const EventBlock = ({ pos, onMove, onResize, onEdit }) => {
     },
     children: [
       /* @__PURE__ */ jsx("div", {
-        className: "event-title",
+        className: "scheduler-tv-event-title",
         children: pos.title,
       }),
       /* @__PURE__ */ jsx("div", {
-        className: "resize-handle",
+        className: "scheduler-tv-resize-handle",
         onPointerDown: onResizePointerDown,
       }),
     ],

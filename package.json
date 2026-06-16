@@ -5,6 +5,11 @@
   "type": "module",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs"
+    }
+  },
   "scripts": {
     "dev": "vp dev",
     "build": "vp build",
@@ -19,6 +24,7 @@
     "@tsdown/css": "^0.22.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6.0.2",
     "typescript": "^6.0.3",
     "unplugin-dts": "^1.0.2",
     "vite-plus": "latest"

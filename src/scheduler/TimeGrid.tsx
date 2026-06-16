@@ -1,10 +1,10 @@
-import React, { useRef, useEffect, useState } from "react";
-import { parseISO } from "date-fns";
+import { useRef, useEffect, useState } from "react";
 
 import type { EventItem } from "./types";
-import type { Positioned } from "./utils";
 import { TimeIndex } from "./TimeIndex";
 import { TimeColumn } from "./TimeColumn";
+
+import "./timeview.css";
 
 type Props = {
   events: EventItem[];

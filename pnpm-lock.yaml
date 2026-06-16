@@ -27,6 +27,9 @@ importers:
       '@types/react-dom':
         specifier: ^19
         version: 19.2.3(@types/react@19.2.17)
+      '@vitejs/plugin-react':
+        specifier: ^6.0.2
+        version: 6.0.2(vite@8.0.16)
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -634,6 +637,19 @@ packages:
 
   '@types/react@19.2.17':
     resolution: {integrity: sha512-MXfmqaVPEVgkBT/aY0aGCkRWWtByiYQXo3xdQ8r5RzuFrPiRn8Gar2tQdXSUQ2GKV3bkXckek89V8wQBY2Q/Aw==}
+
+  '@vitejs/plugin-react@6.0.2':
+    resolution: {integrity: sha512-DlSMqo4WhThw4vB8Mpn0Woe9J+Jfq1geJ61AKW0QEgLzGMNwtIMdxbDUzLxcun8W7NbJO0e2Jg/Nxm3cCSVzzg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    peerDependencies:
+      '@rolldown/plugin-babel': ^0.1.7 || ^0.2.0
+      babel-plugin-react-compiler: ^1.0.0
+      vite: ^8.0.0
+    peerDependenciesMeta:
+      '@rolldown/plugin-babel':
+        optional: true
+      babel-plugin-react-compiler:
+        optional: true
 
   '@voidzero-dev/vite-plus-core@0.1.24':
     resolution: {integrity: sha512-iXPGBABnQnrDMx89H6MOCGcTZp+QW+3rY4YMVKdE6ydchSvPk2O3MI2vgaRVfOtWJ2IjnxSnf1n2yjP67ZBRFQ==}
@@ -1679,6 +1695,11 @@ snapshots:
   '@types/react@19.2.17':
     dependencies:
       csstype: 3.2.3
+
+  '@vitejs/plugin-react@6.0.2(vite@8.0.16)':
+    dependencies:
+      '@rolldown/pluginutils': 1.0.1
+      vite: 8.0.16
 
   '@voidzero-dev/vite-plus-core@0.1.24(@tsdown/css@0.22.2)(typescript@6.0.3)':
     dependencies:

@@ -1,5 +1,6 @@
 import { resolve } from "path";
 import { defineConfig } from "vite-plus";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   staged: {
@@ -14,4 +15,5 @@ export default defineConfig({
       fileName: "react-scheduler",
     },
   },
+  plugins: [react()],
 });
