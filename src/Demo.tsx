@@ -33,6 +33,8 @@ export function Demo() {
   const [week, setWeek] = useState(new Date());
   const [startHour, setStartHour] = useState(6);
   const [endHour, setEndHour] = useState(22);
+  const [startDay, setStartDay] = useState(1);
+  const [nDays, setNDays] = useState(7);
   const createCb = (e: EventItem) => {
     console.log(e);
     const newEvents = [...events, e];
@@ -40,7 +42,6 @@ export function Demo() {
     setEvents(newEvents);
   };
   const updateCb = (updated: EventItem) => {
-    console.log("updated called");
     const newEvents = events.map((curr) => {
       if (curr.id !== updated.id) return curr;
       return updated;
@@ -48,8 +49,9 @@ export function Demo() {
     saveEvents(newEvents);
     setEvents(newEvents);
   };
-  const deleteCb = (deleted: EventItem) => {
-    setEvents(events.filter((curr: EventItem) => curr.id != deleted.id));
+  const clickCb = (event: EventItem, mouseEvt: React.MouseEvent) => {
+    console.log(mouseEvt);
+    setEvents(events.filter((curr: EventItem) => curr.id != event.id));
   };
   return (
     <div className="app">
@@ -86,12 +88,34 @@ export function Demo() {
             ></input>
           </label>
         </div>
+        <div>
+          <label>
+            startDay:
+            <input
+              type="number"
+              value={startDay.toString()}
+              onChange={(e: any) => setStartDay(parseInt(e.target.value))}
+            ></input>
+          </label>
+        </div>
+        <div>
+          <label>
+            nDays:
+            <input
+              type="number"
+              value={nDays.toString()}
+              onChange={(e: any) => setNDays(parseInt(e.target.value))}
+            ></input>
+          </label>
+        </div>
       </div>
       <Scheduler
         events={events}
         createCb={createCb}
         updateCb={updateCb}
-        deleteCb={deleteCb}
+        clickCb={clickCb}
+        startDay={startDay}
+        nDays={nDays}
         startDate={week}
         startHour={startHour}
         endHour={endHour}

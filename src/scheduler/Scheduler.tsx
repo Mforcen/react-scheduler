@@ -6,7 +6,9 @@ export interface SchedulerProps {
   events: EventItem[];
   createCb: (e: EventItem) => void;
   updateCb: (e: EventItem) => void;
-  deleteCb: (e: EventItem) => void;
+  clickCb: (e: EventItem, evt: React.MouseEvent) => void;
+  startDay?: number;
+  nDays?: number;
   startDate?: Date;
   numDays?: number;
   startHour?: number;
@@ -17,8 +19,10 @@ export const Scheduler = ({
   events,
   createCb,
   updateCb,
-  deleteCb,
+  clickCb,
   startDate = new Date(),
+  startDay = 1,
+  nDays = 7,
   startHour = 6,
   endHour = 22,
 }: SchedulerProps) => {
@@ -28,7 +32,9 @@ export const Scheduler = ({
         events={events}
         onCreate={createCb}
         onUpdate={updateCb}
-        onDelete={deleteCb}
+        onClick={clickCb}
+        startDay={startDay}
+        nDays={nDays}
         startDate={startDate}
         startHour={startHour}
         endHour={endHour}

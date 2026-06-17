@@ -10,7 +10,9 @@ type Props = {
   events: EventItem[];
   onCreate: (e: EventItem) => void;
   onUpdate: (e: EventItem) => void;
-  onDelete: (e: EventItem) => void;
+  onClick: (e: EventItem, evt: React.MouseEvent) => void;
+  startDay: number;
+  nDays: number;
   startDate: Date;
   startHour: number;
   endHour: number;
@@ -20,7 +22,9 @@ export default function TimeGrid({
   events,
   onCreate,
   onUpdate,
-  onDelete,
+  onClick,
+  startDay,
+  nDays,
   startDate,
   startHour,
   endHour,
@@ -35,10 +39,11 @@ export default function TimeGrid({
     return () => ro.disconnect();
   }, []);
 
-  const days = Array.from({ length: 7 }).map((_, i) => {
+  const days = Array.from({ length: nDays }).map((_, i) => {
     const d = new Date(startDate);
     d.setHours(0, 0, 0, 0);
-    d.setDate(d.getDate() - d.getDay() + i);
+    const offset = (d.getDay() - startDay + 7) % 7;
+    d.setDate(d.getDate() - offset + i);
     return d;
   });
 
@@ -73,7 +78,7 @@ export default function TimeGrid({
             endHour={endHour}
             onCreate={onCreate}
             onUpdate={onUpdate}
-            onDelete={onDelete}
+            onClick={onClick}
             height={height}
           ></TimeColumn>
         ))}

@@ -12,7 +12,7 @@ export interface TimeColumnProps {
   endHour: number;
   onCreate: (e: EventItem) => void;
   onUpdate: (e: EventItem) => void;
-  onDelete: (e: EventItem) => void;
+  onClick: (e: EventItem, evt: React.MouseEvent) => void;
   height: number;
   di?: number;
 }
@@ -24,7 +24,7 @@ export const TimeColumn: React.FC<TimeColumnProps> = ({
   endHour,
   onCreate,
   onUpdate,
-  onDelete,
+  onClick,
   height,
   di,
 }: TimeColumnProps) => {
@@ -81,7 +81,9 @@ export const TimeColumn: React.FC<TimeColumnProps> = ({
               p.end = addMinutes(p.end, delta / pixelsPerMinute);
               onUpdate(p);
             }}
-            onEdit={() => null}
+            onClick={(e) => {
+              onClick(p, e);
+            }}
           />
         ))}
       </div>
@@ -93,10 +95,10 @@ interface EventBlockProps {
   pos: Positioned;
   onMove: (deltaPx: number) => void;
   onResize: (deltaPx: number) => void;
-  onEdit: () => void;
+  onClick: (e: React.MouseEvent) => void;
 }
 
-const EventBlock = ({ pos, onMove, onResize, onEdit }: EventBlockProps) => {
+const EventBlock = ({ pos, onMove, onResize, onClick }: EventBlockProps) => {
   const [topPx, setTopPx] = useState(pos.top);
   const [heightPx, setHeightPx] = useState(pos.height);
   const leftPct = (pos.col / pos.cols) * 100;
@@ -158,14 +160,12 @@ const EventBlock = ({ pos, onMove, onResize, onEdit }: EventBlockProps) => {
         background: pos.color || "#3a86ff",
       }}
       onPointerDown={onPointerDown}
-      onDoubleClick={onEdit}
+      onDoubleClick={onClick}
       tabIndex={0}
       role="button"
-      aria-label={`${pos.title} ${pos.start} - ${pos.end}`}
       onKeyDown={(e) => {
         if (e.key === "ArrowUp") onMove(-15);
         if (e.key === "ArrowDown") onMove(15);
-        if (e.key === "Enter") onEdit();
         if (e.key === "PageUp") onResize(15);
         if (e.key === "PageDown") onResize(-15);
       }}
