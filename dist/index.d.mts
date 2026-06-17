@@ -10,15 +10,22 @@ type EventItem = {
 //#region src/scheduler/Scheduler.d.ts
 interface SchedulerProps {
   events: EventItem[];
-  create_cb: (e: EventItem) => void;
-  update_cb: (e: EventItem) => void;
-  delete_cb: (e: EventItem) => void;
+  createCb: (e: EventItem) => void;
+  updateCb: (e: EventItem) => void;
+  deleteCb: (e: EventItem) => void;
+  startDate?: Date;
+  numDays?: number;
+  startHour?: number;
+  endHour?: number;
 }
 declare const Scheduler: ({
   events,
-  create_cb,
-  update_cb,
-  delete_cb,
+  createCb,
+  updateCb,
+  deleteCb,
+  startDate,
+  startHour,
+  endHour,
 }: SchedulerProps) => import("react").JSX.Element;
 //#endregion
 export { type EventItem, Scheduler };

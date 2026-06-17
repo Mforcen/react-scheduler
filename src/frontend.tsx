@@ -7,7 +7,7 @@
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { Demo } from "./App";
+import { Demo } from "./Demo";
 
 const elem = document.getElementById("root")!;
 const app = (
@@ -15,3 +15,6 @@ const app = (
     <Demo />
   </StrictMode>
 );
+
+const root = createRoot(elem);
+root.render(app);

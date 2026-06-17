@@ -1,4 +1,4 @@
-import { parseISO, roundToNearestMinutes } from "date-fns";
+import { roundToNearestMinutes } from "date-fns";
 import type { EventItem } from "./types";
 
 export const snapTo = (date: Date, minutes: any = 15) =>

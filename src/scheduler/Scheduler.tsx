@@ -4,15 +4,35 @@ import "./timeview.css";
 
 export interface SchedulerProps {
   events: EventItem[];
-  create_cb: (e: EventItem) => void;
-  update_cb: (e: EventItem) => void;
-  delete_cb: (e: EventItem) => void;
+  createCb: (e: EventItem) => void;
+  updateCb: (e: EventItem) => void;
+  deleteCb: (e: EventItem) => void;
+  startDate?: Date;
+  numDays?: number;
+  startHour?: number;
+  endHour?: number;
 }
 
-export const Scheduler = ({ events, create_cb, update_cb, delete_cb }: SchedulerProps) => {
+export const Scheduler = ({
+  events,
+  createCb,
+  updateCb,
+  deleteCb,
+  startDate = new Date(),
+  startHour = 6,
+  endHour = 22,
+}: SchedulerProps) => {
   return (
     <div style={{ padding: 12, position: "relative" }}>
-      <TimeGrid events={events} onCreate={create_cb} onUpdate={update_cb} onDelete={delete_cb} />
+      <TimeGrid
+        events={events}
+        onCreate={createCb}
+        onUpdate={updateCb}
+        onDelete={deleteCb}
+        startDate={startDate}
+        startHour={startHour}
+        endHour={endHour}
+      />
     </div>
   );
 };

@@ -11,8 +11,9 @@ type Props = {
   onCreate: (e: EventItem) => void;
   onUpdate: (e: EventItem) => void;
   onDelete: (e: EventItem) => void;
-  startHour?: number;
-  endHour?: number;
+  startDate: Date;
+  startHour: number;
+  endHour: number;
 };
 
 export default function TimeGrid({
@@ -20,8 +21,9 @@ export default function TimeGrid({
   onCreate,
   onUpdate,
   onDelete,
-  startHour = 6,
-  endHour = 22,
+  startDate,
+  startHour,
+  endHour,
 }: Props) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState(1000);
@@ -34,8 +36,7 @@ export default function TimeGrid({
   }, []);
 
   const days = Array.from({ length: 7 }).map((_, i) => {
-    const day = new Date();
-    const d = new Date(day);
+    const d = new Date(startDate);
     d.setHours(0, 0, 0, 0);
     d.setDate(d.getDate() - d.getDay() + i);
     return d;

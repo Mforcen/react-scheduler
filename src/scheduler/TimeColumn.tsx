@@ -1,5 +1,5 @@
 import type React from "react";
-import { layoutEvents, mkId, snapTo, type Positioned } from "./utils";
+import { layoutEvents, mkId, type Positioned } from "./utils";
 import type { EventItem } from "./types";
 import { addMinutes, format } from "date-fns";
 import { useEffect, useState } from "react";

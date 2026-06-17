@@ -243,7 +243,7 @@ const EventBlock = ({ pos, onMove, onResize, onEdit }) => {
 };
 //#endregion
 //#region src/scheduler/TimeGrid.tsx
-function TimeGrid({ events, onCreate, onUpdate, onDelete, startHour = 6, endHour = 22 }) {
+function TimeGrid({ events, onCreate, onUpdate, onDelete, startDate, startHour, endHour }) {
   const ref = useRef(null);
   const [height, setHeight] = useState(1e3);
   useEffect(() => {
@@ -254,7 +254,7 @@ function TimeGrid({ events, onCreate, onUpdate, onDelete, startHour = 6, endHour
     return () => ro.disconnect();
   }, []);
   const days = Array.from({ length: 7 }).map((_, i) => {
-    const d = /* @__PURE__ */ new Date(/* @__PURE__ */ new Date());
+    const d = new Date(startDate);
     d.setHours(0, 0, 0, 0);
     d.setDate(d.getDate() - d.getDay() + i);
     return d;
@@ -305,7 +305,15 @@ function TimeGrid({ events, onCreate, onUpdate, onDelete, startHour = 6, endHour
 }
 //#endregion
 //#region src/scheduler/Scheduler.tsx
-const Scheduler = ({ events, create_cb, update_cb, delete_cb }) => {
+const Scheduler = ({
+  events,
+  createCb,
+  updateCb,
+  deleteCb,
+  startDate = /* @__PURE__ */ new Date(),
+  startHour = 6,
+  endHour = 22,
+}) => {
   return /* @__PURE__ */ jsx("div", {
     style: {
       padding: 12,
@@ -313,9 +321,12 @@ const Scheduler = ({ events, create_cb, update_cb, delete_cb }) => {
     },
     children: /* @__PURE__ */ jsx(TimeGrid, {
       events,
-      onCreate: create_cb,
-      onUpdate: update_cb,
-      onDelete: delete_cb,
+      onCreate: createCb,
+      onUpdate: updateCb,
+      onDelete: deleteCb,
+      startDate,
+      startHour,
+      endHour,
     }),
   });
 };
