@@ -94,7 +94,7 @@ const TimeColumn = ({
   endHour,
   onCreate,
   onUpdate,
-  onDelete,
+  onClick,
   height,
   di,
 }) => {
@@ -156,7 +156,9 @@ const TimeColumn = ({
                   p.end = addMinutes(p.end, delta / pixelsPerMinute);
                   onUpdate(p);
                 },
-                onEdit: () => null,
+                onClick: (e) => {
+                  onClick(p, e);
+                },
               },
               p.id,
             ),
@@ -167,7 +169,7 @@ const TimeColumn = ({
     di,
   );
 };
-const EventBlock = ({ pos, onMove, onResize, onEdit }) => {
+const EventBlock = ({ pos, onMove, onResize, onClick }) => {
   const [topPx, setTopPx] = useState(pos.top);
   const [heightPx, setHeightPx] = useState(pos.height);
   const leftPct = (pos.col / pos.cols) * 100;
@@ -178,6 +180,7 @@ const EventBlock = ({ pos, onMove, onResize, onEdit }) => {
   }, [pos]);
   let dragStartY = 0;
   const onPointerDown = (e) => {
+    e.stopPropagation();
     e.currentTarget.setPointerCapture(e.pointerId);
     dragStartY = e.clientY;
     const startTop = topPx;
@@ -218,14 +221,12 @@ const EventBlock = ({ pos, onMove, onResize, onEdit }) => {
       background: pos.color || "#3a86ff",
     },
     onPointerDown,
-    onDoubleClick: onEdit,
+    onDoubleClick: onClick,
     tabIndex: 0,
     role: "button",
-    "aria-label": `${pos.title} ${pos.start} - ${pos.end}`,
     onKeyDown: (e) => {
       if (e.key === "ArrowUp") onMove(-15);
       if (e.key === "ArrowDown") onMove(15);
-      if (e.key === "Enter") onEdit();
       if (e.key === "PageUp") onResize(15);
       if (e.key === "PageDown") onResize(-15);
     },
@@ -243,7 +244,17 @@ const EventBlock = ({ pos, onMove, onResize, onEdit }) => {
 };
 //#endregion
 //#region src/scheduler/TimeGrid.tsx
-function TimeGrid({ events, onCreate, onUpdate, onDelete, startDate, startHour, endHour }) {
+function TimeGrid({
+  events,
+  onCreate,
+  onUpdate,
+  onClick,
+  startDay,
+  nDays,
+  startDate,
+  startHour,
+  endHour,
+}) {
   const ref = useRef(null);
   const [height, setHeight] = useState(1e3);
   useEffect(() => {
@@ -253,10 +264,11 @@ function TimeGrid({ events, onCreate, onUpdate, onDelete, startDate, startHour, 
     if (ref.current) ro.observe(ref.current);
     return () => ro.disconnect();
   }, []);
-  const days = Array.from({ length: 7 }).map((_, i) => {
+  const days = Array.from({ length: nDays }).map((_, i) => {
     const d = new Date(startDate);
     d.setHours(0, 0, 0, 0);
-    d.setDate(d.getDate() - d.getDay() + i);
+    const offset = (d.getDay() - startDay + 7) % 7;
+    d.setDate(d.getDate() - offset + i);
     return d;
   });
   const eventsByDay = days.map((d) => {
@@ -293,7 +305,7 @@ function TimeGrid({ events, onCreate, onUpdate, onDelete, startDate, startHour, 
               endHour,
               onCreate,
               onUpdate,
-              onDelete,
+              onClick,
               height,
             },
             di,
@@ -309,8 +321,10 @@ const Scheduler = ({
   events,
   createCb,
   updateCb,
-  deleteCb,
+  clickCb,
   startDate = /* @__PURE__ */ new Date(),
+  startDay = 1,
+  nDays = 7,
   startHour = 6,
   endHour = 22,
 }) => {
@@ -323,7 +337,9 @@ const Scheduler = ({
       events,
       onCreate: createCb,
       onUpdate: updateCb,
-      onDelete: deleteCb,
+      onClick: clickCb,
+      startDay,
+      nDays,
       startDate,
       startHour,
       endHour,

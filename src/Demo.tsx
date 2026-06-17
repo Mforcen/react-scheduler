@@ -36,7 +36,6 @@ export function Demo() {
   const [startDay, setStartDay] = useState(1);
   const [nDays, setNDays] = useState(7);
   const createCb = (e: EventItem) => {
-    console.log(e);
     const newEvents = [...events, e];
     saveEvents(newEvents);
     setEvents(newEvents);
@@ -49,8 +48,7 @@ export function Demo() {
     saveEvents(newEvents);
     setEvents(newEvents);
   };
-  const clickCb = (event: EventItem, mouseEvt: React.MouseEvent) => {
-    console.log(mouseEvt);
+  const clickCb = (event: EventItem, _mouseEvt: React.MouseEvent) => {
     setEvents(events.filter((curr: EventItem) => curr.id != event.id));
   };
   return (

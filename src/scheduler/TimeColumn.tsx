@@ -112,6 +112,7 @@ const EventBlock = ({ pos, onMove, onResize, onClick }: EventBlockProps) => {
   let dragStartY = 0;
 
   const onPointerDown = (e: React.PointerEvent) => {
+    e.stopPropagation();
     const el = e.currentTarget as HTMLElement;
     el.setPointerCapture(e.pointerId);
     dragStartY = e.clientY;
