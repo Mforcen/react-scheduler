@@ -36,11 +36,15 @@ export function Demo() {
   const [startDay, setStartDay] = useState(1);
   const [nDays, setNDays] = useState(7);
   const createCb = (e: EventItem) => {
+    console.log("Creating event: " + e.id);
+    console.log(e);
     const newEvents = [...events, e];
     saveEvents(newEvents);
     setEvents(newEvents);
   };
   const updateCb = (updated: EventItem) => {
+    console.log("Updating event: " + updated.id);
+    console.log(updated);
     const newEvents = events.map((curr) => {
       if (curr.id !== updated.id) return curr;
       return updated;
@@ -49,6 +53,7 @@ export function Demo() {
     setEvents(newEvents);
   };
   const clickCb = (event: EventItem, _mouseEvt: React.MouseEvent) => {
+    console.log("Clicked event: " + event.id);
     setEvents(events.filter((curr: EventItem) => curr.id != event.id));
   };
   return (
