@@ -123,7 +123,7 @@ const EventBlock = ({ pos, onMove, onResize, onClick }: EventBlockProps) => {
     };
     const up = (ev: PointerEvent) => {
       const dy = ev.clientY - dragStartY;
-      onMove(dy);
+      if (Math.abs(dy) < 5) onMove(dy);
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerup", up);
     };

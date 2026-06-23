@@ -24,7 +24,7 @@
   border-left: 1px solid #eee;
   position: relative;
   min-width: 120px;
-  background: linear-gradient(180deg, transparent 0%, transparent 80%);
+  background: #ffffff;
   display: flex;
   flex-direction: column;
 }
@@ -39,6 +39,7 @@
 .scheduler-tv-day-body {
   position: relative;
   flex-grow: 1;
+  background: #fbfbfb;
 }
 
 /* Event block */
@@ -82,23 +83,6 @@
 .scheduler-tv-event:focus {
   outline: 2px solid rgba(59, 130, 246, 0.6);
   z-index: 10;
-}
-
-/* Make the time column lines subtle */
-.scheduler-tv-day-body::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    transparent 24px,
-    rgba(0, 0, 0, 0.02) 24px
-  );
-  pointer-events: none;
 }
 
 /* Responsive tweaks */
