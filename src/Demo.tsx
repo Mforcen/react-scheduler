@@ -4,7 +4,7 @@ import "./index.css";
 import { Scheduler } from "./scheduler/Scheduler";
 import type { EventItem } from "./scheduler/types";
 import { loadEvents, saveEvents } from "./storage";
-import { addMinutes, format } from "date-fns";
+import { addMinutes, addMonths, format } from "date-fns";
 
 export function Demo() {
   const [events, setEvents] = useState<EventItem[]>(() => {
@@ -35,6 +35,7 @@ export function Demo() {
   const [endHour, setEndHour] = useState(22);
   const [startDay, setStartDay] = useState(1);
   const [nDays, setNDays] = useState(7);
+  const [view, setView] = useState<"week" | "month">("week");
   const createCb = (e: EventItem) => {
     console.log("Creating event: " + e.id);
     console.log(e);
@@ -56,12 +57,39 @@ export function Demo() {
     console.log("Clicked event: " + event.id);
     setEvents(events.filter((curr: EventItem) => curr.id != event.id));
   };
+  const navigate = (dir: number) => {
+    const d = new Date(week);
+    if (view === "month") {
+      d.setMonth(d.getMonth() + dir);
+    } else {
+      d.setDate(d.getDate() + dir * 7);
+    }
+    setWeek(d);
+  };
   return (
     <div className="app">
       <div style={{ display: "block", textAlign: "left" }}>
+        <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 8 }}>
+          <button
+            onClick={() => setView("week")}
+            style={{ fontWeight: view === "week" ? "bold" : "normal" }}
+          >
+            Week
+          </button>
+          <button
+            onClick={() => setView("month")}
+            style={{ fontWeight: view === "month" ? "bold" : "normal" }}
+          >
+            Month
+          </button>
+          <button onClick={() => navigate(-1)}>&lt;</button>
+          <span>{view === "month" ? format(week, "MMMM yyyy") : format(week, "yyyy-MM-dd")}</span>
+          <button onClick={() => navigate(1)}>&gt;</button>
+          <button onClick={() => setWeek(new Date())}>Today</button>
+        </div>
         <div>
           <label>
-            Week:{" "}
+            {view === "month" ? "Month" : "Week"}:{" "}
             <input
               type="date"
               value={format(week, "yyyy-MM-dd")}
@@ -122,6 +150,7 @@ export function Demo() {
         startDate={week}
         startHour={startHour}
         endHour={endHour}
+        view={view}
       />
     </div>
   );

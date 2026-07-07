@@ -1,4 +1,5 @@
 import TimeGrid from "./TimeGrid";
+import MonthGrid from "./MonthGrid";
 import type { EventItem } from "./types";
 import "./timeview.css";
 
@@ -13,6 +14,7 @@ export interface SchedulerProps {
   numDays?: number;
   startHour?: number;
   endHour?: number;
+  view?: "week" | "month";
 }
 
 export const Scheduler = ({
@@ -25,20 +27,32 @@ export const Scheduler = ({
   nDays = 7,
   startHour = 6,
   endHour = 22,
+  view = "week",
 }: SchedulerProps) => {
   return (
     <div style={{ padding: 12, position: "relative" }}>
-      <TimeGrid
-        events={events}
-        onCreate={createCb}
-        onUpdate={updateCb}
-        onClick={clickCb}
-        startDay={startDay}
-        nDays={nDays}
-        startDate={startDate}
-        startHour={startHour}
-        endHour={endHour}
-      />
+      {view === "month" ? (
+        <MonthGrid
+          events={events}
+          onCreate={createCb}
+          onUpdate={updateCb}
+          onClick={clickCb}
+          startDay={startDay}
+          startDate={startDate}
+        />
+      ) : (
+        <TimeGrid
+          events={events}
+          onCreate={createCb}
+          onUpdate={updateCb}
+          onClick={clickCb}
+          startDay={startDay}
+          nDays={nDays}
+          startDate={startDate}
+          startHour={startHour}
+          endHour={endHour}
+        />
+      )}
     </div>
   );
 };

@@ -21,7 +21,7 @@
 }
 
 .scheduler-tv-day {
-  background: linear-gradient(#0000 0% 80%);
+  background: #fff;
   border-left: 1px solid #eee;
   flex-direction: column;
   flex: 1;
@@ -40,6 +40,7 @@
 }
 
 .scheduler-tv-day-body {
+  background: #fbfbfb;
   flex-grow: 1;
   position: relative;
 }
@@ -84,14 +85,6 @@
   outline: 2px solid #3b82f699;
 }
 
-.scheduler-tv-day-body:before {
-  content: "";
-  pointer-events: none;
-  background-image: linear-gradient(#0000 0% 24px, #00000005 24px);
-  position: absolute;
-  inset: 0;
-}
-
 @media (width <= 800px) {
   .scheduler-tv-time-col {
     display: none;
@@ -104,4 +97,90 @@
   .scheduler-tv-grid {
     gap: 6px;
   }
+}
+.scheduler-mv {
+  flex-direction: column;
+  height: 100%;
+  display: flex;
+}
+
+.scheduler-mv-header {
+  border-bottom: 2px solid #e0e0e0;
+  grid-template-columns: repeat(7, 1fr);
+  display: grid;
+}
+
+.scheduler-mv-header-cell {
+  text-align: center;
+  color: #555;
+  padding: 8px 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.scheduler-mv-body {
+  flex-direction: column;
+  flex-grow: 1;
+  display: flex;
+}
+
+.scheduler-mv-week {
+  border-bottom: 1px solid #eee;
+  flex: 1;
+  grid-template-columns: repeat(7, 1fr);
+  display: grid;
+}
+
+.scheduler-mv-cell {
+  cursor: pointer;
+  background: #fff;
+  border-right: 1px solid #eee;
+  flex-direction: column;
+  min-height: 80px;
+  padding: 4px;
+  display: flex;
+}
+
+.scheduler-mv-cell:last-child {
+  border-right: none;
+}
+
+.scheduler-mv-cell-other {
+  background: #f9f9f9;
+}
+
+.scheduler-mv-cell-day {
+  color: #333;
+  margin-bottom: 2px;
+  padding: 2px 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.scheduler-mv-cell-other .scheduler-mv-cell-day {
+  color: #bbb;
+}
+
+.scheduler-mv-cell-events {
+  flex-direction: column;
+  gap: 2px;
+  display: flex;
+  overflow: hidden;
+}
+
+.scheduler-mv-event {
+  color: #fff;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 2px 4px;
+  font-size: 11px;
+  overflow: hidden;
+}
+
+.scheduler-mv-more {
+  color: #666;
+  padding: 1px 4px;
+  font-size: 11px;
 }

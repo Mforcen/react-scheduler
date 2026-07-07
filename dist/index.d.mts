@@ -19,6 +19,7 @@ interface SchedulerProps {
   numDays?: number;
   startHour?: number;
   endHour?: number;
+  view?: "week" | "month";
 }
 declare const Scheduler: ({
   events,
@@ -30,6 +31,7 @@ declare const Scheduler: ({
   nDays,
   startHour,
   endHour,
+  view,
 }: SchedulerProps) => import("react").JSX.Element;
 //#endregion
 export { type EventItem, Scheduler };

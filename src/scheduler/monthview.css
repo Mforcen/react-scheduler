@@ -1,0 +1,86 @@
+.scheduler-mv {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.scheduler-mv-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.scheduler-mv-header-cell {
+  padding: 8px 4px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+}
+
+.scheduler-mv-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.scheduler-mv-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-bottom: 1px solid #eee;
+  flex: 1;
+}
+
+.scheduler-mv-cell {
+  border-right: 1px solid #eee;
+  padding: 4px;
+  min-height: 80px;
+  cursor: pointer;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.scheduler-mv-cell:last-child {
+  border-right: none;
+}
+
+.scheduler-mv-cell-other {
+  background: #f9f9f9;
+}
+
+.scheduler-mv-cell-day {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  padding: 2px 4px;
+  margin-bottom: 2px;
+}
+
+.scheduler-mv-cell-other .scheduler-mv-cell-day {
+  color: #bbb;
+}
+
+.scheduler-mv-cell-events {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.scheduler-mv-event {
+  font-size: 11px;
+  padding: 2px 4px;
+  border-radius: 3px;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.scheduler-mv-more {
+  font-size: 11px;
+  color: #666;
+  padding: 1px 4px;
+}

@@ -188,7 +188,8 @@ const EventBlock = ({ pos, onMove, onResize, onClick }) => {
       setTopPx(ev.clientY - dragStartY + startTop);
     };
     const up = (ev) => {
-      onMove(ev.clientY - dragStartY);
+      const dy = ev.clientY - dragStartY;
+      if (Math.abs(dy) < 5) onMove(dy);
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerup", up);
     };
@@ -316,6 +317,133 @@ function TimeGrid({
   });
 }
 //#endregion
+//#region src/scheduler/MonthCell.tsx
+const MAX_VISIBLE = 3;
+const MonthCell = ({ day, events, isCurrentMonth, onCreate, onClick }) => {
+  const handleCreate = (day, ev) => {
+    if (ev.target.closest(".scheduler-mv-event")) return;
+    const start = new Date(day);
+    start.setHours(9, 0, 0, 0);
+    const end = new Date(day);
+    end.setHours(10, 0, 0, 0);
+    onCreate({
+      id: mkId(),
+      title: "New event",
+      start,
+      end,
+      color: void 0,
+    });
+  };
+  const visible = events.slice(0, MAX_VISIBLE);
+  const remaining = events.length - MAX_VISIBLE;
+  return /* @__PURE__ */ jsxs("div", {
+    className: `scheduler-mv-cell${isCurrentMonth ? "" : " scheduler-mv-cell-other"}`,
+    onPointerDown: (ev) => handleCreate(day, ev),
+    children: [
+      /* @__PURE__ */ jsx("div", {
+        className: "scheduler-mv-cell-day",
+        children: format(day, "d"),
+      }),
+      /* @__PURE__ */ jsxs("div", {
+        className: "scheduler-mv-cell-events",
+        children: [
+          visible.map((ev) =>
+            /* @__PURE__ */ jsx(
+              "div",
+              {
+                className: "scheduler-mv-event",
+                style: { background: ev.color || "#3a86ff" },
+                onPointerDown: (e) => {
+                  e.stopPropagation();
+                  onClick(ev, e);
+                },
+                children: ev.title,
+              },
+              ev.id,
+            ),
+          ),
+          remaining > 0 &&
+            /* @__PURE__ */ jsxs("div", {
+              className: "scheduler-mv-more",
+              children: ["+", remaining, " more"],
+            }),
+        ],
+      }),
+    ],
+  });
+};
+//#endregion
+//#region src/scheduler/MonthGrid.tsx
+const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+function MonthGrid({ events, onCreate, onUpdate: _, onClick, startDay, startDate }) {
+  const firstOfMonth = new Date(startDate);
+  firstOfMonth.setDate(1);
+  firstOfMonth.setHours(0, 0, 0, 0);
+  const start = new Date(firstOfMonth);
+  const offset = (start.getDay() - startDay + 7) % 7;
+  start.setDate(start.getDate() - offset);
+  const days = Array.from({ length: 42 }, (_, i) => {
+    const d = new Date(start);
+    d.setDate(d.getDate() + i);
+    return d;
+  });
+  const weeks = [];
+  for (let w = 0; w < 6; w++) weeks.push(days.slice(w * 7, (w + 1) * 7));
+  const dayNames = [...DAY_NAMES.slice(startDay), ...DAY_NAMES.slice(0, startDay)];
+  const eventsByDay = days.map((d) => {
+    const colStart = new Date(d);
+    colStart.setHours(0, 0, 0, 0);
+    const colEnd = new Date(d);
+    colEnd.setHours(23, 59, 59, 999);
+    return events.filter((ev) => ev.start <= colEnd && ev.end >= colStart);
+  });
+  const monthNum = startDate.getMonth();
+  return /* @__PURE__ */ jsxs("div", {
+    className: "scheduler-mv",
+    children: [
+      /* @__PURE__ */ jsx("div", {
+        className: "scheduler-mv-header",
+        children: dayNames.map((name) =>
+          /* @__PURE__ */ jsx(
+            "div",
+            {
+              className: "scheduler-mv-header-cell",
+              children: name,
+            },
+            name,
+          ),
+        ),
+      }),
+      /* @__PURE__ */ jsx("div", {
+        className: "scheduler-mv-body",
+        children: weeks.map((week, wi) =>
+          /* @__PURE__ */ jsx(
+            "div",
+            {
+              className: "scheduler-mv-week",
+              children: week.map((day, di) => {
+                const idx = wi * 7 + di;
+                return /* @__PURE__ */ jsx(
+                  MonthCell,
+                  {
+                    day,
+                    events: eventsByDay[idx] || [],
+                    isCurrentMonth: day.getMonth() === monthNum,
+                    onCreate,
+                    onClick,
+                  },
+                  idx,
+                );
+              }),
+            },
+            wi,
+          ),
+        ),
+      }),
+    ],
+  });
+}
+//#endregion
 //#region src/scheduler/Scheduler.tsx
 const Scheduler = ({
   events,
@@ -327,23 +455,34 @@ const Scheduler = ({
   nDays = 7,
   startHour = 6,
   endHour = 22,
+  view = "week",
 }) => {
   return /* @__PURE__ */ jsx("div", {
     style: {
       padding: 12,
       position: "relative",
     },
-    children: /* @__PURE__ */ jsx(TimeGrid, {
-      events,
-      onCreate: createCb,
-      onUpdate: updateCb,
-      onClick: clickCb,
-      startDay,
-      nDays,
-      startDate,
-      startHour,
-      endHour,
-    }),
+    children:
+      view === "month"
+        ? /* @__PURE__ */ jsx(MonthGrid, {
+            events,
+            onCreate: createCb,
+            onUpdate: updateCb,
+            onClick: clickCb,
+            startDay,
+            startDate,
+          })
+        : /* @__PURE__ */ jsx(TimeGrid, {
+            events,
+            onCreate: createCb,
+            onUpdate: updateCb,
+            onClick: clickCb,
+            startDay,
+            nDays,
+            startDate,
+            startHour,
+            endHour,
+          }),
   });
 };
 //#endregion
