@@ -283,17 +283,18 @@ function TimeGrid({
     });
   });
   return /* @__PURE__ */ jsxs("div", {
-    style: { display: "flex" },
+    style: {
+      display: "flex",
+      flex: 1,
+    },
     children: [
       /* @__PURE__ */ jsx(TimeIndex, {
         startHour,
         endHour,
       }),
       /* @__PURE__ */ jsx("div", {
-        style: {
-          display: "grid",
-          gridTemplateColumns: `repeat(${days.length}, 1fr)`,
-        },
+        className: "scheduler-tv-grid",
+        style: { gridTemplateColumns: `repeat(${days.length}, 1fr)` },
         ref,
         children: days.map((day, di) =>
           /* @__PURE__ */ jsx(
@@ -461,6 +462,10 @@ const Scheduler = ({
     style: {
       padding: 12,
       position: "relative",
+      display: "flex",
+      flexDirection: "column",
+      flex: 1,
+      minHeight: 0,
     },
     children:
       view === "month"

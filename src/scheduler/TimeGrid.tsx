@@ -59,11 +59,11 @@ export default function TimeGrid({
   });
 
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex", flex: 1 }}>
       <TimeIndex startHour={startHour} endHour={endHour} />
       <div
+        className="scheduler-tv-grid"
         style={{
-          display: "grid",
           gridTemplateColumns: `repeat(${days.length}, 1fr)`,
         }}
         ref={ref}

@@ -1,20 +1,24 @@
 .scheduler-tv-grid {
-  align-items: flex-start;
-  gap: 8px;
-  display: flex;
+  flex-grow: 1;
+  height: 100%;
+  display: grid;
+  overflow: hidden;
 }
 
 .scheduler-tv-time-col {
+  flex-direction: column;
   width: 60px;
+  display: flex;
+  overflow: auto;
 }
 
 .scheduler-tv-time-row {
   color: #666;
   box-sizing: border-box;
   border-top: 1px solid #eee;
+  flex: 1;
   justify-content: flex-end;
   align-items: flex-start;
-  height: 64px;
   padding: 4px 6px 4px 4px;
   font-size: 12px;
   display: flex;
@@ -86,21 +90,14 @@
 }
 
 @media (width <= 800px) {
-  .scheduler-tv-time-col {
-    display: none;
-  }
-
   .scheduler-tv-day-header {
     font-size: 12px;
-  }
-
-  .scheduler-tv-grid {
-    gap: 6px;
   }
 }
 .scheduler-mv {
   flex-direction: column;
-  height: 100%;
+  flex: 1;
+  min-height: 0;
   display: flex;
 }
 

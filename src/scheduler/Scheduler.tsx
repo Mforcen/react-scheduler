@@ -30,7 +30,16 @@ export const Scheduler = ({
   view = "week",
 }: SchedulerProps) => {
   return (
-    <div style={{ padding: 12, position: "relative" }}>
+    <div
+      style={{
+        padding: 12,
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        flex: 1,
+        minHeight: 0,
+      }}
+    >
       {view === "month" ? (
         <MonthGrid
           events={events}
